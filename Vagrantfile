@@ -20,8 +20,6 @@ Vagrant.configure(2) do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://atlas.hashicorp.com/search.
 
   # Disable the synced_folder feature
   config.vm.synced_folder '.', '/vagrant', :disabled => true
@@ -39,9 +37,10 @@ Vagrant.configure(2) do |config|
       :libvirt__forward_mode => 'none',
       :libvirt__network_name => 'pxe_network',
       :libvirt__dhcp_enabled => false
-    # During provisioning of docker containers, Fuel will attempt to bring up
-    # the fuel menu but fail, due to ssh settings on the vagrant provisioner. its okay
-    # its not a problem. Just ignore.
+
+    node.vm.provision :ansible do  |ansible|
+      ansible.playbook = "bifrost.yml"
+    end
   end
 
   # 1st Openstack Server
