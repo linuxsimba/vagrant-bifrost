@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install git
+      apt: name=git
+
+    - name: install vim
+      apt: name=vim-nox
+
+- hosts: all
+  tasks:
+    - name: install bifrost
+      git:
+        repo: https://git.openstack.org/openstack/bifrost.git
+        dest: /home/vagrant/bifrost
+
